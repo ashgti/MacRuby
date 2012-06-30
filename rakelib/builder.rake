@@ -158,6 +158,8 @@ namespace :macruby do
   task :static => :files do
     if ENABLE_STATIC_LIBRARY
       $builder.config = STATIC_CONFIG
+      Rake::Task['plblockimp'].reenable
+      Rake::Task['plblockimp'].invoke
       build_objects
       $builder.link_archive("lib#{RUBY_SO_NAME}-static.a", $builder.objs - ['main', 'gc-stub'] + ['plblockimp'])
     end
